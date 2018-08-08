@@ -15,7 +15,25 @@ class CreateTalksTable extends Migration
     {
         Schema::create('talks', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title');
+            $table->string('slug');
+            $table->text('summary');
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('room_id');
+            $table->string('thumbnail')->nullable();
+            $table->string('image')->nullable();
+            $table->text('description')->nullable();
+            $table->dateTime('starts_at');
+            $table->dateTime('ends_at');
             $table->timestamps();
+
+            $table->foreign('user_id')
+            ->references('id')->on('users')
+            ->onDelete('cascade');
+
+            $table->foreign('room_id')
+            ->references('id')->on('rooms')
+            ->onDelete('cascade');            
         });
     }
 
